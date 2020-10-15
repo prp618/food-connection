@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "39.0.0",
     "name": "food-connection",
     "slug": "food-connection",
     "privacy": "public",
