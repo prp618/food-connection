@@ -10,6 +10,8 @@ export default class OpeningPage extends Component {
         super(props);
     }
 
+    /* Creates the background image for the app, display message, link to
+        the LoginPage, link to the SignupPage, and link to not having an account.*/
     render() {
         return (
             <View style={styles.container}>
