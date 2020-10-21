@@ -15,23 +15,23 @@ class SignUpLoadPage extends Component {
         super(props);
     }
 
-    determineDietPlan = () => {
-        diet = HealthScoreCalculator.createDiet(this.props.user);
-        this.props.changeDiet(diet);
-        console.log("Diet calculated: " + JSON.stringify(diet));
+    determineDietPlan = () => {                                     // Creates a diet plan for
+        diet = HealthScoreCalculator.createDiet(this.props.user);   // the user based upon their
+        this.props.changeDiet(diet);                                // health scores referenced from
+        console.log("Diet calculated: " + JSON.stringify(diet));    // LoginPage.
     }
 
-    setHealthScores = () => {
-        const foods = JSON.parse(JSON.stringify(this.props.foods.list));
-        HealthScoreCalculator.setHealthScore(foods, diet);
+    setHealthScores = () => {                                               // Sets the users
+        const foods = JSON.parse(JSON.stringify(this.props.foods.list));    // health score to be
+        HealthScoreCalculator.setHealthScore(foods, diet);                  // applied to their diet.
         this.props.setFoods(foods);
     }
 
-    save = () => {
-        const newUser = JSON.parse(JSON.stringify(this.props.user));
-        newUser.diet = diet;
-        fetch('http://192.168.10.239:5000/users/update', {
-            method: 'POST',
+    save = () => {                                                      // Saves the new user to the 
+        const newUser = JSON.parse(JSON.stringify(this.props.user));    // database and displays their
+        newUser.diet = diet;                                            // info on the screen.  Otherwise
+        fetch('http://10.0.0.153:5000/users/update', {                  // displays a message if an error
+            method: 'POST',                                             // occurs.
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -57,13 +57,13 @@ class SignUpLoadPage extends Component {
         });
     }
 
-    componentDidMount() {
+    componentDidMount() {           // Mounts the methods to the current object and saves it.
         this.determineDietPlan();
         this.setHealthScores();
         this.save();
     }
 
-    render() {
+    render() {                                  // Creates a loading screen while performing operations.
         return (
             <View style={styles.viewStyle}>
                 <Text>Loading...</Text>
@@ -73,12 +73,14 @@ class SignUpLoadPage extends Component {
 }
 
 
-const mapStateToProps = (state) => {
-    const { user, foods } = state
+const mapStateToProps = (state) => {    // Maps the constants user and foods to a state
+    const { user, foods } = state       // and returns their states.
     return { user, foods }
 };
 
-const mapDispatchToProps = (dispatch) => {
+/* ??? Maps methods setFoods and changeDiet to create an action that places the info
+for user, foods, and diet into a payload (usable info) to be distributed when appropriate.*/
+const mapDispatchToProps = (dispatch) => {  
     return {
         setFoods: (foods) => {
             dispatch({
