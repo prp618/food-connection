@@ -8,10 +8,12 @@ import styles from './frontendstyle';
 
 const image = (require('../assets/background.jpg'));
 
-class LoginPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+/* Creates a constructor to hold variables to hold values for username, password, 
+sign in error message, loading pages, loading foods, and successful login.*/
+class LoginPage extends Component {                 
+    constructor(props) {                            
+        super(props);                                
+        this.state = {                              
             signInError: '',
             username: '',
             password: '',
@@ -21,15 +23,19 @@ class LoginPage extends Component {
         };
     }
 
+    /* Displays the health score of foods that gets calulated by the HealthScoreCalculator.*/
     setHealthScores = () => {
         const foods = JSON.parse(JSON.stringify(this.props.foods.list));
         HealthScoreCalculator.setHealthScore(foods, this.props.user.diet);
         this.props.setFoods(foods);
     }
 
+    /* Loads the database to display the foods that have been put into the database, and
+    shows the health score of the foods by changing the state referenced from the SignupPage,
+    and catches potential errors changing the state again.*/
     getFoods = () => {
         this.setState({ isLoadingFoods: true });
-        fetch('http://192.168.10.239:5000/foods', {
+        fetch('http://10.0.0.153:5000/foods', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,9 +68,12 @@ class LoginPage extends Component {
         });
     }
 
+    /* Takes the username and password input from the user and logs them into their account,
+    while also connecting them to the database by changing the state.  If the user provides incorrect username
+    and/or password displays a message notifying them.*/
     onLogin = () => {
         this.setState({ isLoading: true });
-        fetch('http://192.168.10.239:5000/users/login', {
+        fetch('http://10.0.0.153:5000/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -97,6 +106,11 @@ class LoginPage extends Component {
         });
     }
 
+    /* Notifies the user that the page is loading and shows the username and password
+    they have input into the the page and provides a button that allows them to submit
+    their input to the database and directs them to the appropriate page (either back to
+    the login page if an incorrect username/password were entered or to their account page
+    associated with their username and password if input correctly also referencing the state.*/
     render() {
         if (this.state.isLoading) {
             return (
@@ -146,13 +160,16 @@ class LoginPage extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+// Returns the current state of the variables referenced.
+const mapStateToProps = (state) => {            
     return {
         user: state.user,
         foods: state.foods,
     };
 };
 
+/* ??? Maps methods setUser, setFoods, and changeDiet to create an action that places the info
+for user, foods, and diet into a payload (usable info) to be distributed when appropriate.*/
 const mapDispatchToProps = (dispatch) => {
     return {
         setUser: (user) => {

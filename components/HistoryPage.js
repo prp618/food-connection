@@ -13,6 +13,8 @@ class HistoryPage extends Component {
         super(props);
     }
 
+    /* ??? Shows the history of foods that have been looked up, and creates the background
+    and styling for the page.*/
     FoodItem = ({ food }) => {
         return (
             <View style = {styles.foodItem1}>   
@@ -46,7 +48,8 @@ class HistoryPage extends Component {
 }
 
 
-
+/* Creates a constant for users and foods and maps them to a state, which then returns the
+state of the user and foods constants.*/
 const mapStateToProps = (state) => {
     const { user, foods } = state;
     return { user, foods };
